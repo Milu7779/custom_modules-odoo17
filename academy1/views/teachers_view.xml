@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_teacher_tree" model="ir.ui.view">
+        <field name="name">academy1.teacher.tree</field>
+        <field name="model">academy1.teacher</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="department"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_teacher_form" model="ir.ui.view">
+        <field name="name">academy1.teacher.form</field>
+        <field name="model">academy1.teacher</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="age"/>
+                    <field name="department"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_teacher" model="ir.actions.act_window">
+        <field name="name">Teachers</field>
+        <field name="res_model">academy1.teacher</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_academy_root" name="Academy"/>
+    <menuitem id="menu_academy_management" name="Teacher" parent="menu_academy_root"/>
+    <menuitem id="menu_teacher" name="Teachers_List" parent="menu_academy_management" action="action_teacher"/>
+</odoo>
