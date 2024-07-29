@@ -6,10 +6,10 @@ class Appointment(models.Model):
     _rec_name = 'patient_id'
 
     reference = fields.Char(string="Reference No", default='New')
-    date = fields.Datetime(string='Date')
-    doctor_id = fields.Many2one('hospital.doctor',string='Doctor Name')
-    patient_id = fields.Many2one('hospital.patient',string='Patient Name')
-    gender = fields.Selection([('male','Male'),('female','Female')],string='patient Gender',related='patient_id.gender')
+    date = fields.Datetime(string = 'Date')
+    doctor_id = fields.Many2one('hospital.doctor', string='Doctor Name')
+    patient_id = fields.Many2one('hospital.patient', string='Patient Name')
+    gender = fields.Selection([('male' , 'Male') , ('female' , 'Female')], string = 'patient Gender', related = 'patient_id.gender')
 
     @api.model_create_multi
     def create(self, vals_list):
