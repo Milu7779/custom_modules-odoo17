@@ -23,6 +23,8 @@ Hospital Module to manage Doctors and patients
     # always loaded
     'data': [
          'security/ir.model.access.csv',
+        'security/hospital_security.xml',
+        'data/sequence_appointment.xml',
         'views/views.xml',
         'views/templates.xml',
         'views/doctors_view.xml',

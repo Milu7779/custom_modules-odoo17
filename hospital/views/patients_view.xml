@@ -23,8 +23,19 @@
                         <field name="age"/>
                         <field name="gender"/>
                         <field name="phone_no"/>
-                        <field name="appointment_id"/>
+                        <!--<field name="appointment_id"/>-->
                     </group>
+                    <notebook>
+                        <page string="Appointments">
+                            <field name="appointment_id">
+                                <tree string="Appointments" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="patient_id"/>
+                                    <field name="doctor_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
 
             </form>

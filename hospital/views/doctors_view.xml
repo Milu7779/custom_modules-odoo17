@@ -24,8 +24,19 @@
                         <field name="name"/>
                         <field name="specialization"/>
                         <field name="phone_no"/>
-                        <field name="appointment_id"/>
+                        <!--<field name="appointment_id"/>-->
                     </group>
+                    <notebook>
+                        <page string="Appointments">
+                            <field name="appointment_id">
+                                <tree string="Appointments" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="patient_id"/>
+                                    <field name="doctor_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
 
             </form>
@@ -39,6 +50,6 @@
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem id="menu_hospital_root" name="Hospital"/>
-    <menuitem id="menu_hospital_management_doctors" name="Doctor" parent="menu_hospital_root"/>
-    <menuitem id="menu_doctors_list" name="Doctors_List" parent="menu_hospital_management_doctors" action="action_doctors"/>
+    <menuitem id="menu_hospital_management_doctors" name="Doctor" parent="menu_hospital_root" groups="hospital.group_hospital_receptionist"/>
+    <menuitem id="menu_doctors_list" name="Doctors_List" parent="menu_hospital_management_doctors" action="action_doctors" groups="hospital.group_hospital_receptionist"/>
 </odoo>

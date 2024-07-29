@@ -7,6 +7,7 @@
                     <field name="date"/>
                     <field name="doctor_id"/>
                     <field name="patient_id"/>
+                    <field name="gender"/>
 
             </tree>
         </field>
@@ -18,9 +19,12 @@
             <form >
                 <sheet>
                     <group>
+                        <field name="reference" readonly="True"/>
                          <field name="date"/>
                         <field name="doctor_id"/>
                         <field name="patient_id"/>
+                        <field name="gender"/>
+                        <field name="create_uid"/>
                     </group>
                 </sheet>
 
@@ -35,6 +39,6 @@
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem id="menu_hospital_root" name="Hospital"/>
-    <menuitem id="menu_hospital_management_appointment" name="Appointment" parent="menu_hospital_root"/>
+    <menuitem id="menu_hospital_management_appointment" name="Appointment" parent="menu_hospital_root" groups="hospital.group_hospital_doctors"/>
     <menuitem id="menu_appointment" name="appointment_List" parent="menu_hospital_management_appointment" action="action_appointment"/>
 </odoo>
