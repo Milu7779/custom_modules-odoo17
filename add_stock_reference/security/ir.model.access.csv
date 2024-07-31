@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_mydemo_stock_reference,access_mydemo_stock_reference,model_sale_order,,1,1,1,1
+access_mydemo_stock_picking,access_mydemo_stock_picking,model_stock_picking,,1,1,1,1
