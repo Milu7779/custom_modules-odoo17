@@ -2,7 +2,7 @@
 {
     'name': "sale_inventory_brand",
 
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
+    'summary': "inherited sale order,inventory module and added custom fields",
 
     'description': """
 Long description of module's purpose
@@ -25,7 +25,8 @@ Long description of module's purpose
         # 'security/ir.model.access.csv',
         'views/sale_order_template.xml',
         'views/stock_picking_templates.xml',
-        'views/stock_move_template.xml'
+        'views/stock_move_template.xml',
+        'report/report_sale_order_document_inherit.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

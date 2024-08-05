@@ -10,7 +10,7 @@ class StockPicking(models.Model):
 class StockMoveLines(models.Model):
     _inherit = 'stock.move'
 
-
+    stock_reference = fields.Char(string='Stock Reference')
     product_brand_id = fields.Many2one(
         'product.brand',
         string='Product Brand',

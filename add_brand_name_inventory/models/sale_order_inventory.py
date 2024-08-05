@@ -15,3 +15,4 @@ class SaleOrderTemplate(models.Model):
             for move in picking.move_ids:  # Corrected from move_lines to move_ids
                 move.stock_reference = self.stock_reference
         return result
+
