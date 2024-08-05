@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_hospital_patient_id_card">
+
+                <t t-call="web.html_container">
+                    <t t-call="web.basic_layout">
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="page">
+                            <div class="id-card">
+                                <div class="header">
+                                    <h2>Patient ID Card</h2>
+                                </div>
+                                <div class="body">
+                                    <div class="info">
+                                        <p><strong>Patient ID:</strong> <span t-esc="doc.id"/></p>
+                                        <p><strong>Name:</strong> <span t-esc="doc.name"/></p>
+                                        <p><strong>Age:</strong> <span t-esc="doc.age"/></p>
+                                        <p><strong>gender:</strong> <span t-esc="doc.gender"/></p>
+                                        <p><strong>Phone no:</strong> <span t-esc="doc.phone_no"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                </t>
+    </template>
+</odoo>
