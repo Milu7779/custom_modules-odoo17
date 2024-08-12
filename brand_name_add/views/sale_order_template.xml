@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+     <record id="view_sales_product_form" model="ir.ui.view">
+        <field name="name">view.form.inherit.sales.demo</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="brand_id" string="Product Brand"/>
+            </xpath>
+        </field>
+    </record >
+
+    <record id="view_product_brand_form" model="ir.ui.view">
+        <field name="name">product.brand.form</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <form string="Product Brand">
+                <sheet>
+                    <group>
+                        <field name="brand_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_product_brand_tree" model="ir.ui.view">
+        <field name="name">product.brand.tree</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <tree string="Product Brands">
+                <field name="brand_name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.brand</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                <field name="brand_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- form view of add serial_no field on sale.order.line -->
+    <record id="view_sale_order_line_form_inherited_serial_no" model="ir.ui.view">
+        <field name="name">sale.order.line.form.inherit.serial_no</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="before">
+                <field name="serial_no_id" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                <field name="serial_no_ids" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_form_inherit_stock_reference1" model="ir.ui.view">
+            <field name="name">sale.order.form.stock.reference</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                    <field name="stock_reference"/>
+                </field>
+            </field>
+    </record>
+</odoo>

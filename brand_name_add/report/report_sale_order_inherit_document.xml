@@ -1,0 +1,18 @@
+<odoo>
+    <template id="my_custom_sales_order_portal_content" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//table[@id='sales_order_table']//thead//tr/th[last()]" position="after">
+            <th class="text-end" id="product_brand_header">
+                <span>Product Brand</span>
+            </th>
+        </xpath>
+        <xpath expr="//table[@id='sales_order_table']//tbody//tr" position="inside">
+            <t t-foreach="lines_to_report" t-as="line">
+                <t t-set="brand_id"
+                   t-value="line.product_id.brand_id.brand_name"/>
+                <td class="text-end">
+                    <span t-esc="brand_id"/>
+                </td>
+            </t>
+        </xpath>
+    </template>
+</odoo>
