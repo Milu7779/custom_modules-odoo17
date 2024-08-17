@@ -1,0 +1,31 @@
+<odoo>
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//div[@id='right-elements']" position="after">
+            <div id="suggested_products_invoice" class="col-12 mb-4">
+                <h4>Suggested Products</h4>
+                <table class="table table-bordered table-hover" style="width: 100%;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 50%;">Product</th>
+                            <th style="width: 25%;">Quantity</th>
+                            <th style="width: 25%;">Sale Price</th>
+                            <th style="width: 25%;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.account_sugested_line" t-as="line">
+                            <tr>
+                                <td><span t-field="line.product_id.name"/></td>
+                                <td><span t-field="line.product_qty"/></td>
+                                <td><span t-field="line.product_unit_price"/></td>
+                                <td><span /></td>
+
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

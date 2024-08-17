@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_custom" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//section[@id='details']" position="after">
+                <h4>Suggested Products</h4>
+                <table class="table table-sm">
+                    <thead style="display: table-row-group">
+                        <tr>
+                            <th>product</th>
+                            <th>quantity</th>
+                            <th>Sales price</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="sale_order.suggested_product_line" t-as="custom_line">
+                            <td t-esc="custom_line.product_id.name"/>
+                            <td t-esc="custom_line.product_qty"/>
+                            <td t-esc="custom_line.product_unit_price"/>
+                            <td />
+                        </tr>
+                    </tbody>
+                </table>
+
+        </xpath>
+    </template>
+</odoo>

@@ -10,7 +10,25 @@
                 </xpath>
             <xpath expr="//page[@id='invoice_tab']//field[@name='tax_ids']" position="after">
                     <field name="serial_no_id"/>
-                </xpath>
+            </xpath>
+            <xpath expr="//page[@id='invoice_tab']" position="after">
+                <page string="Suggested product lines">
+                    <field name='account_sugested_line' widget="section_and_note_one2many" mode="tree">
+                        <tree string="suggested product Lines"
+                                    editable="bottom"
+                                    limit="200">
+                            <field name="product_id" string="Product"/>
+                            <field name="product_qty" string="Quantity"/>
+                            <field name="product_unit_price" string="Unit Price"/>
+                            <field name="total_amount"/>
+                        </tree>
+                    </field>
+                </page>
+
+            </xpath>
         </field>
     </record>
+
+
+
 </odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+     <record id="view_sales_suggested_product_form" model="ir.ui.view">
+        <field name="name">view.form.sales.suggested.product</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='order_lines']" position="after">
+                <page string="Suggested product lines" >
+                    <field name='suggested_product_line' widget="section_and_note_one2many" mode="tree">
+                        <tree string="suggested product Lines"
+                                    editable="bottom"
+                                    limit="200">
+                            <field name="product_id" string="Product"/>
+                            <field name="product_qty" string="Quantity"/>
+                            <field name="product_unit_price" string="Unit Price"/>
+                            <field name="total_amount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record >
+</odoo>

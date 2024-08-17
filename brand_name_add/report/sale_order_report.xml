@@ -1,0 +1,31 @@
+<odoo>
+    <template id="sale_order_report_inherit_id" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@class='page']" position="after">
+            <div class="mt32 mb32">
+                <h2>Suggested Products</h2>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Sale Price</th>
+                            <th>Total</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="doc.suggested_product_line" t-as="line">
+                            <tr>
+                                <td><span t-field="line.product_id.name"/></td>
+                                <td><span t-field="line.product_qty"/></td>
+                                <td><span t-field="line.product_unit_price"/></td>
+                                <td><span /></td>
+
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

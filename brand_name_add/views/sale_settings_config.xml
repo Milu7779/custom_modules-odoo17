@@ -1,0 +1,31 @@
+<odoo>
+    <record id="sale_config_settings_inherited" model="ir.ui.view">
+                <field name="name">sale.config.settings</field>
+                <field name="model">res.config.settings</field>
+                <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//block[@name='catalog_setting_container']" position="after">
+                         <div class="settings" name="order_configuration_history_container">
+                        <block title="Sale Order History Configuration" name="sal_order_setting_container">
+                            <div class="content-group col-md-6" >
+                                <setting id="last_no_of_order" >
+                                    <field name="last_no_of_orders" string="Lst no of orders"/>
+                                </setting>
+                                <setting id="last_no_of_order" >
+                                    <field name="last_no_of_orders" string="Lst no of orders"/>
+                                </setting>
+                            </div>
+                            <div class="content-group col-md-6">
+                                <setting id="last_no_of_days_order" >
+                                    <field name="last_no_of_days_orders" string="Lst no of days orders"/>
+                                </setting>
+                                <setting id="enable_recorder" >
+                                    <field name="enable_recorder" string="Enable Recorder"/>
+                                </setting>
+                            </div>
+                        </block>
+                         </div>
+                    </xpath>
+                </field>
+        </record>
+</odoo>

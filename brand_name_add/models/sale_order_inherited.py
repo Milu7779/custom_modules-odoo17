@@ -10,9 +10,40 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     stock_reference = fields.Char(string='Stock Reference')
+    suggested_product_line = fields.One2many(
+        comodel_name='sale.suggested.line',
+        inverse_name='suggested_product_id',
+        string='Suggested Product Lines')
+    sale_order_history_id = fields.One2many(
+        comodel_name='sale.order.history',
+        inverse_name='sale_order_history_line_id',
+        string='sale Order')
+    sale_settings_id = fields.One2many(
+        comodel_name='res.config.settings',
+        inverse_name='sale_settings_id',
+        string='sale Order history')
+
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+
+        if self.partner_id:
+            previous_orders = self.env['sale.order'].search([
+                ('partner_id', '=', self.partner_id.id),
+                ('state', 'in', ['sale', 'done'])
+            ])
+            order_lines = []
+            for prev_order in previous_orders:
+                for line in prev_order.order_line:
+                    order_lines.append((0, 0, {
+                        'sale_order_id': prev_order.name,
+                        'order_date': prev_order.date_order,
+                        'product_name': line.product_id.name,
+                    }))
+            self.sale_order_history_id = order_lines
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
+        print('setting.....', self.sale_settings_id.last_no_of_orders)
         for picking in self.picking_ids:
             picking.stock_reference = self.stock_reference
             for move in picking.move_ids:
@@ -42,7 +73,7 @@ class SaleOrder(models.Model):
         return res
 
     def _create_invoices(self, grouped=False, final=False):
-        res1 = super(SaleOrder, self)._create_invoices(self)
+        res1 = super(SaleOrder, self)._create_invoices(grouped,final)
 
         sale_order_lines = self.mapped('order_line')
 
@@ -51,6 +82,29 @@ class SaleOrder(models.Model):
             for acc_move in account_moves:
                 acc_move.serial_no_id = line.serial_no_id
                 acc_move.brand_id = line.brand_id
+
+        for order in self:
+            for invoice in res1:
+                suggested_lines = []
+                for line in order.suggested_product_line:
+                    suggested_lines.append((0, 0, {
+                        'product_id': line.product_id.id,
+                        'product_qty': line.product_qty,
+                        'product_unit_price': line.product_unit_price,
+                        'total_amount': line.total_amount,
+                    }))
+                if suggested_lines:
+                    invoice.account_sugested_line = suggested_lines
+
+
+        """sale_suggested_lines = self.mapped('suggested_product_line')
+
+        for line1 in sale_suggested_lines:
+            account_suggested_lines = self.env['account.suggested.line'].search([('suggest_line_ids.account_sugested_line', '=', line1.id)])
+            for acc_suggest_line in account_suggested_lines:
+                acc_suggest_line.product_id = line1.product_id
+                acc_suggest_line.product_qty = line1.product_qty
+                acc_suggest_line.product_unit_price = line1.product_unit_price"""
 
         return res1
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+     <record id="view_sales_order_history" model="ir.ui.view">
+        <field name="name">sale.order.history.line</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='order_lines']" position="after">
+                <page string="Sale order History" >
+                    <field name='sale_order_history_id' widget="section_and_note_one2many" mode="tree">
+                        <tree>
+                            <field name="sale_order_id" string="Sale Order"/>
+                            <field name="order_date" string="order Date"/>
+                            <field name="product_name" string="Product"/>
+
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record >
+</odoo>
