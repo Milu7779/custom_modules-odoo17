@@ -9,10 +9,10 @@
                         <block title="Sale Order History Configuration" name="sal_order_setting_container">
                             <div class="content-group col-md-6" >
                                 <setting id="last_no_of_order" >
-                                    <field name="last_no_of_orders" string="Lst no of orders"/>
+                                    <field name="last_no_of_orders" string="Last no of orders"/>
                                 </setting>
                                 <setting id="last_no_of_order" >
-                                    <field name="last_no_of_orders" string="Lst no of orders"/>
+                                    <field name="order_stages" string="Order Stages"/>
                                 </setting>
                             </div>
                             <div class="content-group col-md-6">
@@ -20,7 +20,7 @@
                                     <field name="last_no_of_days_orders" string="Lst no of days orders"/>
                                 </setting>
                                 <setting id="enable_recorder" >
-                                    <field name="enable_recorder" string="Enable Recorder"/>
+                                    <field name="enable_recorder" string="Enable Reorder"/>
                                 </setting>
                             </div>
                         </block>

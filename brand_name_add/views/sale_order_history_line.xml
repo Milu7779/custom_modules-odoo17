@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
-     <record id="view_sales_order_history" model="ir.ui.view">
+    <record id="view_sales_order_history" model="ir.ui.view">
         <field name="name">sale.order.history.line</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook//page[@name='order_lines']" position="after">
                 <page string="Sale order History" >
+                    <button name="action_reorder" type="object" string="RE-ORDER" class="oe_highlight"/>
                     <field name='sale_order_history_id' widget="section_and_note_one2many" mode="tree">
-                        <tree>
+                        <tree editable="'bottom">
+                            <field name="re_order" string="Re Order"/>
                             <field name="sale_order_id" string="Sale Order"/>
-                            <field name="order_date" string="order Date"/>
+                            <field name="order_date" string="order Date" date="date_order"/>
                             <field name="product_name" string="Product"/>
-
+                            <field name="price" string="Price"/>
+                            <field name="qty" string="Quantity"/>
+                            <field name="discount" string="Discount"/>
+                            <field name="sub_total" string="Sub Total"/>
+                            <field name="order_status" string="Status"/>
+                            <button name="action_reorder" string="Re order" type="object"  class="btn-secondary"/>
                         </tree>
                     </field>
                 </page>

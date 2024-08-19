@@ -3,4 +3,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_brand_name_add_product_brand,access_brand_name_add_product_brand,model_product_brand,,1,1,1,1
 access_sale_suggested_product_line,access_sale_suggested_product_line,model_sale_suggested_line,,1,1,1,1
 access_account_suggested_product_line,access_account_suggested_product_line,model_account_suggested_line,,1,1,1,1
+
 access_sale_sale_order_history_line,access_sale_sale_order_history_line,model_sale_order_history,,1,1,1,1

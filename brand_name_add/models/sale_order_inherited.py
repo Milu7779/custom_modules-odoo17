@@ -1,4 +1,6 @@
 from odoo import models, fields, api
+from datetime import datetime, timedelta
+from odoo.exceptions import UserError
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -18,32 +20,110 @@ class SaleOrder(models.Model):
         comodel_name='sale.order.history',
         inverse_name='sale_order_history_line_id',
         string='sale Order')
-    sale_settings_id = fields.One2many(
+    """sale_settings_id = fields.One2many(
         comodel_name='res.config.settings',
         inverse_name='sale_settings_id',
-        string='sale Order history')
+        string='sale Order history')"""
+
+    """@api.onchange('partner_id')
+    def _onchange_partner_id(self):
+
+        config_param = self.env['ir.config_parameter'].sudo()
+        last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', default=0))
+        last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', default=0))
+        print('setting.....', last_no_of_orders)
+
+        if self.partner_id:
+            config_param = self.env['ir.config_parameter'].sudo()
+
+            # Get configuration settings
+            last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', default=0))
+            last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', default=0))
+
+            domain = [
+                ('partner_id', '=', self.partner_id.id),
+                ('state', 'in', ['sale', 'done'])
+            ]
+            #if self.id:
+                #domain.append(('id', '!=', self.id))
+
+            if last_no_of_days_orders > 0:
+                # Filter by the last number of days
+                date_from = datetime.now() - timedelta(days=last_no_of_days_orders)
+                domain.append(('date_order', '>=', date_from))
+
+            # Fetch the orders based on the domain
+            previous_orders = self.env['sale.order'].search(domain, limit=last_no_of_orders, order='date_order desc')
+
+            self.sale_order_history_id = [(6, 0, previous_orders.ids)]
+        else:
+            self.sale_order_history_id = [(5, 0, 0)]"""
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
-
         if self.partner_id:
-            previous_orders = self.env['sale.order'].search([
+
+            config_param = self.env['ir.config_parameter'].sudo()
+            last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', 0))
+            last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', 0))
+            order_state = config_param.get_param('sale.order_stages', default='all')
+
+            date_limit = datetime.today() - timedelta(days=last_no_of_days_orders)
+
+            domain = [
                 ('partner_id', '=', self.partner_id.id),
-                ('state', 'in', ['sale', 'done'])
-            ])
+                ('date_order', '>=', date_limit)
+            ]
+            if order_state != 'all':
+                domain.append(('state', '=', order_state))
+
+            previous_orders = self.env['sale.order'].search(domain, limit=last_no_of_orders)
             order_lines = []
+
             for prev_order in previous_orders:
-                for line in prev_order.order_line:
-                    order_lines.append((0, 0, {
-                        'sale_order_id': prev_order.name,
-                        'order_date': prev_order.date_order,
-                        'product_name': line.product_id.name,
-                    }))
+
+                    for line in prev_order.order_line:
+                        order_lines.append((0, 0, {
+                                'sale_order_id': prev_order.name,
+                                'order_date': prev_order.date_order,
+                                'product_name': line.product_id,
+                                'price': line.price_unit,
+                                'qty': line.product_uom_qty,
+                                'discount': line.discount,
+                                'sub_total': line.price_subtotal,
+                                'order_status': line.state,
+                        }))
             self.sale_order_history_id = order_lines
+        """if self.partner_id:
+            config = self.env['res.config.settings'].search([], limit=1)
+            if not config:
+                raise UserError("Configuration settings are missing.")
+
+            config_param = self.env['ir.config_parameter'].sudo()
+            last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', default=0))
+            last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', default=0))
+
+            last_no_of_orders = config.last_no_of_orders
+            last_no_of_days_orders = config.last_no_of_days_orders
+
+            today = datetime.today().date()
+            date_threshold = today - timedelta(days=last_no_of_days_orders)
+
+            domain = [
+                ('partner_id', '=', self.partner_id.id),
+                ('date_order', '>=', date_threshold)
+            ]
+
+            order_history = self.env['sale.order'].search(domain, limit=last_no_of_orders, order='date_order desc')
+
+            self.sale_order_history_id = [(6, 0, order_history.ids)]
+        else:
+            self.sale_order_history_id = [(5, 0, 0)]"""
+
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
-        print('setting.....', self.sale_settings_id.last_no_of_orders)
+
         for picking in self.picking_ids:
             picking.stock_reference = self.stock_reference
             for move in picking.move_ids:
@@ -97,14 +177,47 @@ class SaleOrder(models.Model):
                     invoice.account_sugested_line = suggested_lines
 
 
-        """sale_suggested_lines = self.mapped('suggested_product_line')
 
-        for line1 in sale_suggested_lines:
-            account_suggested_lines = self.env['account.suggested.line'].search([('suggest_line_ids.account_sugested_line', '=', line1.id)])
-            for acc_suggest_line in account_suggested_lines:
-                acc_suggest_line.product_id = line1.product_id
-                acc_suggest_line.product_qty = line1.product_qty
-                acc_suggest_line.product_unit_price = line1.product_unit_price"""
 
         return res1
+
+    def action_reorder(self):
+
+        config_param = self.env['ir.config_parameter'].sudo()
+        enable_reorder = config_param.get_param('sale.enable_recorder', 0)
+        if enable_reorder != 'True':
+            raise UserError('You do not have access to reorder because the eable_recorder parameter is not enabled.')
+        else:
+
+            order = self.env['sale.order'].create({
+                'partner_id': self.partner_id.id,
+            })
+
+            order_lines = []
+            for history in self.sale_order_history_id.filtered('re_order'):
+                order_lines.append((0, 0, {
+                    'product_id': history.product_name.id,
+                    'product_uom_qty': history.qty,
+                    'price_unit': history.price,
+                    'discount': history.discount,
+                }))
+
+            order.write({
+                'order_line': order_lines,
+                'state': 'sent',
+            })
+
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Sale Order',
+                'view_mode': 'form',
+                'res_model': 'sale.order',
+                'res_id': order.id,
+                'target': 'current',
+            }
+
+
+
+
+
 
