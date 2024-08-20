@@ -20,47 +20,10 @@ class SaleOrder(models.Model):
         comodel_name='sale.order.history',
         inverse_name='sale_order_history_line_id',
         string='sale Order')
-    """sale_settings_id = fields.One2many(
-        comodel_name='res.config.settings',
-        inverse_name='sale_settings_id',
-        string='sale Order history')"""
-
-    """@api.onchange('partner_id')
-    def _onchange_partner_id(self):
-
-        config_param = self.env['ir.config_parameter'].sudo()
-        last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', default=0))
-        last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', default=0))
-        print('setting.....', last_no_of_orders)
-
-        if self.partner_id:
-            config_param = self.env['ir.config_parameter'].sudo()
-
-            # Get configuration settings
-            last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', default=0))
-            last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', default=0))
-
-            domain = [
-                ('partner_id', '=', self.partner_id.id),
-                ('state', 'in', ['sale', 'done'])
-            ]
-            #if self.id:
-                #domain.append(('id', '!=', self.id))
-
-            if last_no_of_days_orders > 0:
-                # Filter by the last number of days
-                date_from = datetime.now() - timedelta(days=last_no_of_days_orders)
-                domain.append(('date_order', '>=', date_from))
-
-            # Fetch the orders based on the domain
-            previous_orders = self.env['sale.order'].search(domain, limit=last_no_of_orders, order='date_order desc')
-
-            self.sale_order_history_id = [(6, 0, previous_orders.ids)]
-        else:
-            self.sale_order_history_id = [(5, 0, 0)]"""
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
+        self.sale_order_history_id = [(5, 0, 0)]
         if self.partner_id:
 
             config_param = self.env['ir.config_parameter'].sudo()
@@ -72,54 +35,31 @@ class SaleOrder(models.Model):
 
             domain = [
                 ('partner_id', '=', self.partner_id.id),
-                ('date_order', '>=', date_limit)
+                ('date_order', '>=', date_limit),
+
             ]
             if order_state != 'all':
                 domain.append(('state', '=', order_state))
 
             previous_orders = self.env['sale.order'].search(domain, limit=last_no_of_orders)
-            order_lines = []
-
+            print(previous_orders)
+            print('limit......',last_no_of_orders)
+            order_lines1 = []
             for prev_order in previous_orders:
-
-                    for line in prev_order.order_line:
-                        order_lines.append((0, 0, {
+                for line in prev_order.order_line:
+                    order_lines1.append((0,0, {
+                                're_order': 0,
                                 'sale_order_id': prev_order.name,
                                 'order_date': prev_order.date_order,
-                                'product_name': line.product_id,
+                                'product_name': line.product_id.name,
                                 'price': line.price_unit,
                                 'qty': line.product_uom_qty,
                                 'discount': line.discount,
                                 'sub_total': line.price_subtotal,
                                 'order_status': line.state,
-                        }))
-            self.sale_order_history_id = order_lines
-        """if self.partner_id:
-            config = self.env['res.config.settings'].search([], limit=1)
-            if not config:
-                raise UserError("Configuration settings are missing.")
-
-            config_param = self.env['ir.config_parameter'].sudo()
-            last_no_of_orders = int(config_param.get_param('sale.last_no_of_orders', default=0))
-            last_no_of_days_orders = int(config_param.get_param('sale.last_no_of_days_orders', default=0))
-
-            last_no_of_orders = config.last_no_of_orders
-            last_no_of_days_orders = config.last_no_of_days_orders
-
-            today = datetime.today().date()
-            date_threshold = today - timedelta(days=last_no_of_days_orders)
-
-            domain = [
-                ('partner_id', '=', self.partner_id.id),
-                ('date_order', '>=', date_threshold)
-            ]
-
-            order_history = self.env['sale.order'].search(domain, limit=last_no_of_orders, order='date_order desc')
-
-            self.sale_order_history_id = [(6, 0, order_history.ids)]
-        else:
-            self.sale_order_history_id = [(5, 0, 0)]"""
-
+                    }))
+            print(order_lines1)
+            self.sale_order_history_id = order_lines1
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
@@ -145,9 +85,7 @@ class SaleOrder(models.Model):
                move_line.serial_no_ids = line.serial_no_ids
                move_line.lot_id = line.serial_no_id
 
-            """account_moves = self.env['account.move.line'].search([('sale_line_ids', 'in', line.id)])
-            for acc_move in account_moves:
-                acc_move.brand_id = line.serial_no_id"""
+
 
 
         return res
