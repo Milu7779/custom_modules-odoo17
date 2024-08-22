@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_sale_order_line_add_product" model="ir.ui.view">
+        <field name="name">sale.order.line.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='order_lines']/field[@name='order_line']" position="before">
+                <header>
+                    <button name="add_product_wizard_action" type="object" string="Add Product" class="oe_highlight"/>
+                </header>
+            </xpath>
+            <xpath expr="//notebook//page[@name='order_lines']/field[@name='order_line']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
