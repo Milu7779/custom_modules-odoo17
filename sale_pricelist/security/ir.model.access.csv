@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_product_pricelist_tire_item,access_product_pricelist_tier_item,model_product_tier_line,base.group_user,1,1,1,1

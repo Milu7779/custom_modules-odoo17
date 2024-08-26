@@ -1,0 +1,39 @@
+<odoo>
+    <record id="product_pricelist_item_form_view_inherited" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.inherited</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='compute_price']" position="attributes">
+                <attribute name="options">{'tiered': 'Tiered'}</attribute>
+            </xpath>
+
+            <xpath expr="//sheet//group[@name='pricelist_rule_computation']//group[@name='pricelist_rule_method']/field[@name='compute_price']" position="after">
+                <field name="product_variant_ids" string="product variants" groups="base.group_user" invisible="compute_price != 'tiered'"/>
+
+            </xpath>
+            <xpath expr="//field[@name='product_variant_ids']" position="after">
+                <field name="Tier_lines" string="Tiers"  widget="one2many" groups="base.group_user" invisible="compute_price != 'tiered'">
+                    <tree editable="bottom" limit="100">
+                        <field name="tier_no" string="Tire ID"/>
+                        <field name="tire_from"/>
+                        <field name="tire_to"/>
+                        <field name="list_price"/>
+                    </tree>
+                </field>
+            </xpath>
+            <xpath expr="//group[@name='pricelist_rule_target']" position="attributes">
+                <attribute name="invisible">compute_price == 'tiered'</attribute>
+                <attribute name="groups">product.group_sale_pricelist</attribute>
+            </xpath>
+            <xpath expr="//group[@name='pricelist_rule_limits']" position="attributes">
+                <attribute name="invisible">compute_price == 'tiered'</attribute>
+                <attribute name="groups">product.group_sale_pricelist</attribute>
+            </xpath>
+            <xpath expr="//group[@name='pricelist_rule_related']" position="attributes">
+                <attribute name="invisible">compute_price == 'tiered'</attribute>
+                <attribute name="groups">product.group_sale_pricelist</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
