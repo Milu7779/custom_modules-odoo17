@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="purchase_vendor_pricelist.list">
+      <field name="name">purchase_vendor_pricelist list</field>
+      <field name="model">purchase_vendor_pricelist.purchase_vendor_pricelist</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="purchase_vendor_pricelist.action_window">
+      <field name="name">purchase_vendor_pricelist window</field>
+      <field name="res_model">purchase_vendor_pricelist.purchase_vendor_pricelist</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="purchase_vendor_pricelist.action_server">
+      <field name="name">purchase_vendor_pricelist server</field>
+      <field name="model_id" ref="model_purchase_vendor_pricelist_purchase_vendor_pricelist"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="purchase_vendor_pricelist" id="purchase_vendor_pricelist.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="purchase_vendor_pricelist.menu_1" parent="purchase_vendor_pricelist.menu_root"/>
+    <menuitem name="Menu 2" id="purchase_vendor_pricelist.menu_2" parent="purchase_vendor_pricelist.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="purchase_vendor_pricelist.menu_1_list" parent="purchase_vendor_pricelist.menu_1"
+              action="purchase_vendor_pricelist.action_window"/>
+    <menuitem name="Server to list" id="purchase_vendor_pricelist" parent="purchase_vendor_pricelist.menu_2"
+              action="purchase_vendor_pricelist.action_server"/>
+-->
+  </data>
+</odoo>

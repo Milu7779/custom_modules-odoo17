@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_supplierinfo_form_inherited" model="ir.ui.view">
+        <field name="name">product.supplierinfo</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="tier_ids" string="Tiers"  widget="one2many">
+                        <tree editable="bottom" limit="100">
+                            <field name="tier_no" string="Tire ID"/>
+                            <field name="tier_from"/>
+                            <field name="tier_to"/>
+                            <field name="list_price"/>
+                        </tree>
+                    </field>
+            </xpath>
+            <xpath expr="//field[@name='min_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!--<xpath expr="//label[@for='price']" position="replace">
+
+            </xpath>-->
+            <xpath expr="//field[@name='price']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
