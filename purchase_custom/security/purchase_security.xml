@@ -1,0 +1,7 @@
+<odoo>
+    <record id="group_discount_on_purchase_line" model="res.groups">
+        <field name="name">Discount on Purchase Line</field>
+        <field name="comment">purchase manager has approval for discount on purchase line</field>
+
+    </record>
+</odoo>
