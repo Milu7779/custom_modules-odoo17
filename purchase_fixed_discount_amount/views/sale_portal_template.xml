@@ -1,0 +1,14 @@
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//table[@id='sales_order_table']//thead//tr/th[last()]" position="after">
+            <th class="text-end" id="fixed_discount_amount_header" groups="purchase_fixed_discount_amount.group_discount_on_purchase_line">
+                <span>Fixed discount Amount</span>
+            </th>
+        </xpath>
+        <xpath expr="//table[@id='sales_order_table']//tbody//tr" position="inside">
+            <td>
+                <span t-field="line.fixed_discount_amount"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>
