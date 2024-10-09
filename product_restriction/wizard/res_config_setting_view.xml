@@ -1,0 +1,19 @@
+<odoo>
+    <record id="res_config_setting_view_inherited" model="ir.ui.view">
+            <field name="name">res.config.setting</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//app[@name='sale_management']//block[@name='catalog_setting_container']" position="after">
+                     <block title="Discount Limit Configuration" name="discount_setting_container">
+                         <setting id="discount_on_product">
+                             <field name="discount_limit_on_product" string="discount % on product"/>
+                         </setting>
+                        <setting id="discount_on_product_category">
+                             <field name="discount_limit_on_product_category" string="discount % on product category"/>
+                         </setting>
+                     </block>
+                </xpath>
+            </field>
+        </record>
+</odoo>

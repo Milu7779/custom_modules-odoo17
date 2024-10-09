@@ -1,0 +1,14 @@
+<odoo>
+    <!-- inherit sale order line form view then add field -->
+    <record id="res_config_setting_view_inherited" model="ir.ui.view">
+            <field name="name">sale.order.line</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page//form//field[@name='price_unit']" position="after">
+                    <field name="discount_validation" string="discount % on product"/>
+
+                </xpath>
+            </field>
+        </record>
+</odoo>
