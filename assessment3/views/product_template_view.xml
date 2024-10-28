@@ -1,0 +1,21 @@
+<odoo>
+
+    <record id="product_template_form_view_inherited" model="ir.ui.view">
+        <field name="name">add is bundle product</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_bundle_product"/>
+            </xpath>
+
+            <xpath expr="//notebook//page[@name='invoicing']" position="after">
+                <field name="is_bundle_product" invisible="is_bundle_product != True"/>
+            </xpath>
+
+
+
+        </field>
+    </record>
+
+</odoo>

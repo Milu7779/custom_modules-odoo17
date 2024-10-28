@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_bundle_product,access_bundle_product,model_bundle_product,,1,1,1,1
+access_bundle_product_line,access_bundle_product_line,model_bundle_product_line,,1,1,1,1
+access_pack_product,access_pack_product,model_pack_product,,1,1,1,1

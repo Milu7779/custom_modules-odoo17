@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="pack_product_form_view_inherited" model="ir.ui.view">
+        <field name="name">pack product</field>
+        <field name="model">pack.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="order_id" invisible="1"/>
+                <field name="calculate_pack_price"/>
+                <field name="sales_price"/>
+            </form>
+
+
+        </field>
+    </record>
+
+</odoo>

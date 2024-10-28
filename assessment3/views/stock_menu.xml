@@ -1,0 +1,12 @@
+<odoo>
+    <record id="bundle_product_actions" model="ir.actions.act_window">
+            <field name="name">Bundle Product</field>
+            <field name="res_model">product.template</field>
+            <field name="view_id" ref="product.product_template_only_form_view"/>
+            <field name="view_mode">form</field>
+    </record>
+    <menuitem id="bundle_product_submenu"
+              name="Bundle_product"
+              action="action_bundle_product"
+              parent="stock.menu_stock_root"/>
+</odoo>
