@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="menu_reporting_daily_sales_report"
+                name="Daily Sales Report"
+                parent="sale.menu_sale_report"
+                action="daily_sales_report.action_daily_sales_report"
+                sequence="50"/>
+</odoo>
